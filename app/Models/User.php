@@ -173,4 +173,11 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasMany(Deposit::class);
     }
+
+    public function createWallet()
+    {
+        return $this->wallet()->create([
+            'amount' => 0,
+        ]);
+    }
 }
