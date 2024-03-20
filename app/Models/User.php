@@ -176,7 +176,7 @@ class User extends Authenticatable implements HasMedia
 
     public function createWallet()
     {
-        return $this->wallet()->create([
+        return $this->petwallet()->create([
             'amount' => 0,
         ]);
     }
