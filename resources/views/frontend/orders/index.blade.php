@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
-<div class="container">
+<div class="container pt-4">
     <div class="row justify-content-center">
         <div class="col-md-12">
             @can('order_create')
@@ -174,7 +174,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

@@ -49,6 +49,12 @@ class LoginController extends Controller
         return '/home';
     }
 
+/**
+ * A description of the entire PHP function.
+ *
+ * @param Request $request description
+ * @param $user description
+ */
 protected function authenticated(Request $request, $user)
 {
     if ($user->two_factor) {

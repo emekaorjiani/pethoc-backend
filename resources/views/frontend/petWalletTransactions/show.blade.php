@@ -31,7 +31,7 @@
                                         {{ trans('cruds.petWalletTransaction.fields.user') }}
                                     </th>
                                     <td>
-                                        {{ $petWalletTransaction->user->name ?? '' }}
+
                                     </td>
                                 </tr>
                                 <tr>

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deposit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = Auth::user();
+
+        $depositTransactions = Deposit::where('user_id', $user->id)->latest()->get();
+        return view('home', compact('depositTransactions'));
     }
 }

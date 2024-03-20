@@ -12,12 +12,30 @@ class UsersTableSeeder extends Seeder
         $users = [
             [
                 'id'              => 1,
-                'name'            => 'Admin',
-                'email'           => 'admin@admin.com',
+                'name'            => 'Admin Pethoc',
+                'email'           => 'admin@pethoc.com',
                 'password'        => bcrypt('password'),
                 'remember_token'  => null,
                 'two_factor_code' => '',
-                'phone_number'    => '',
+                'phone_number'    => '08101234567',
+            ],
+            [
+                'id'              => 2,
+                'name'            => 'User Pethoc',
+                'email'           => 'user@pethoc.com',
+                'password'        => bcrypt('password'),
+                'remember_token'  => null,
+                'two_factor_code' => '',
+                'phone_number'    => '08112345678',
+            ],
+            [
+                'id'              => 3,
+                'name'            => 'Driver Pethoc',
+                'email'           => 'driver@pethoc.com',
+                'password'        => bcrypt('password'),
+                'remember_token'  => null,
+                'two_factor_code' => '',
+                'phone_number'    => '08021234567',
             ],
         ];
 

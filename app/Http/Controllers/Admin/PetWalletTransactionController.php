@@ -7,7 +7,7 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyPetWalletTransactionRequest;
 use App\Http\Requests\StorePetWalletTransactionRequest;
 use App\Http\Requests\UpdatePetWalletTransactionRequest;
-use App\Models\PetWalletTransaction;
+use App\Models\PetWallet;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -21,9 +21,9 @@ class PetWalletTransactionController extends Controller
     {
         abort_if(Gate::denies('pet_wallet_transaction_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $petWalletTransactions = PetWalletTransaction::with(['user', 'created_by'])->get();
+        $petWallets = PetWallet::with(['user', 'created_by'])->get();
 
-        return view('admin.petWalletTransactions.index', compact('petWalletTransactions'));
+        return view('admin.petWalletTransactions.index', compact('petWallets'));
     }
 
     public function create()
@@ -37,53 +37,53 @@ class PetWalletTransactionController extends Controller
 
     public function store(StorePetWalletTransactionRequest $request)
     {
-        $petWalletTransaction = PetWalletTransaction::create($request->all());
+        $petWallet = PetWallet::create($request->all());
 
         return redirect()->route('admin.pet-wallet-transactions.index');
     }
 
-    public function edit(PetWalletTransaction $petWalletTransaction)
+    public function edit(PetWallet $petWallet)
     {
         abort_if(Gate::denies('pet_wallet_transaction_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $petWalletTransaction->load('user', 'created_by');
+        $petWallet->load('user', 'created_by');
 
-        return view('admin.petWalletTransactions.edit', compact('petWalletTransaction', 'users'));
+        return view('admin.petWalletTransactions.edit', compact('petWallet', 'users'));
     }
 
-    public function update(UpdatePetWalletTransactionRequest $request, PetWalletTransaction $petWalletTransaction)
+    public function update(UpdatePetWalletTransactionRequest $request, PetWallet $petWallet)
     {
-        $petWalletTransaction->update($request->all());
+        $petWallet->update($request->all());
 
         return redirect()->route('admin.pet-wallet-transactions.index');
     }
 
-    public function show(PetWalletTransaction $petWalletTransaction)
+    public function show(PetWallet $petWallet)
     {
         abort_if(Gate::denies('pet_wallet_transaction_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $petWalletTransaction->load('user', 'created_by');
+        $petWallet->load('user', 'created_by');
 
-        return view('admin.petWalletTransactions.show', compact('petWalletTransaction'));
+        return view('admin.petWalletTransactions.show', compact('petWallet'));
     }
 
-    public function destroy(PetWalletTransaction $petWalletTransaction)
+    public function destroy(PetWallet $petWallet)
     {
         abort_if(Gate::denies('pet_wallet_transaction_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $petWalletTransaction->delete();
+        $petWallet->delete();
 
         return back();
     }
 
     public function massDestroy(MassDestroyPetWalletTransactionRequest $request)
     {
-        $petWalletTransactions = PetWalletTransaction::find(request('ids'));
+        $petWallets = PetWallet::find(request('ids'));
 
-        foreach ($petWalletTransactions as $petWalletTransaction) {
-            $petWalletTransaction->delete();
+        foreach ($petWallets as $petWallet) {
+            $petWallet->delete();
         }
 
         return response(null, Response::HTTP_NO_CONTENT);

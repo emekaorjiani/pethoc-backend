@@ -28,10 +28,6 @@ class StorePetWalletTransactionRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'status' => [
-                'string',
-                'required',
-            ],
         ];
     }
 }
