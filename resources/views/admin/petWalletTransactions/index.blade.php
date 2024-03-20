@@ -9,7 +9,7 @@
             <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
                 {{ trans('global.app_csvImport') }}
             </button>
-            @include('csvImport.modal', ['model' => 'PetWalletTransaction', 'route' => 'admin.pet-wallet-transactions.parseCsvImport'])
+            @include('csvImport.modal', ['model' => 'PetWallet', 'route' => 'admin.pet-wallet-transactions.parseCsvImport'])
         </div>
     </div>
 @endcan
@@ -47,7 +47,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($petWalletTransactions as $key => $petWalletTransaction)
+                    @foreach($petWallets as $key => $petWallet)
                         <tr data-entry-id="{{ $petWalletTransaction->id }}">
                             <td>
 
@@ -146,7 +146,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

@@ -12,7 +12,6 @@ class CreatePetWalletTable extends Migration
             $table->bigIncrements('id');
             $table->decimal('amount', 15, 2);
             $table->string('transaction_type')->nullable();
-            $table->string('status');
             $table->timestamps();
             $table->softDeletes();
         });

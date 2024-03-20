@@ -1,21 +1,9 @@
 @extends('layouts.frontend')
 @section('content')
-<div class="container">
+<div class="container py-4">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            @can('pet_wallet_transaction_create')
-                <div style="margin-bottom: 10px;" class="row">
-                    <div class="col-lg-12">
-                        <a class="btn btn-success" href="{{ route('frontend.pet-wallet-transactions.create') }}">
-                            {{ trans('global.add') }} {{ trans('cruds.petWalletTransaction.title_singular') }}
-                        </a>
-                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                            {{ trans('global.app_csvImport') }}
-                        </button>
-                        @include('csvImport.modal', ['model' => 'PetWalletTransaction', 'route' => 'admin.pet-wallet-transactions.parseCsvImport'])
-                    </div>
-                </div>
-            @endcan
+
             <div class="card">
                 <div class="card-header">
                     {{ trans('cruds.petWalletTransaction.title_singular') }} {{ trans('global.list') }}
@@ -29,20 +17,24 @@
                                     <th>
                                         {{ trans('cruds.petWalletTransaction.fields.id') }}
                                     </th>
-                                    <th>
-                                        {{ trans('cruds.petWalletTransaction.fields.user') }}
-                                    </th>
+
                                     <th>
                                         {{ trans('cruds.petWalletTransaction.fields.amount') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.petWalletTransaction.fields.transaction_type') }}
+                                       Type
+                                    </th>
+                                    <th>
+                                        Reference
+                                    </th>
+                                    <th>
+                                        Method
                                     </th>
                                     <th>
                                         {{ trans('cruds.petWalletTransaction.fields.status') }}
                                     </th>
                                     <th>
-                                        &nbsp;
+                                        Date and Time
                                     </th>
                                 </tr>
                             </thead>
@@ -52,17 +44,24 @@
                                         <td>
                                             {{ $petWalletTransaction->id ?? '' }}
                                         </td>
+
                                         <td>
-                                            {{ $petWalletTransaction->user->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $petWalletTransaction->amount ?? '' }}
+                                            ₦{{ number_format($petWalletTransaction->amount ?? 0.0, 2) }}
                                         </td>
                                         <td>
                                             {{ $petWalletTransaction->transaction_type ?? '' }}
                                         </td>
                                         <td>
+                                            {{ $petWalletTransaction->txnref ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $petWalletTransaction->payment_method ?? '' }}
+                                        </td>
+                                        <td>
                                             {{ $petWalletTransaction->status ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $petWalletTransaction->created_at ?? '' }}
                                         </td>
                                         <td>
                                             @can('pet_wallet_transaction_show')
@@ -71,19 +70,8 @@
                                                 </a>
                                             @endcan
 
-                                            @can('pet_wallet_transaction_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.pet-wallet-transactions.edit', $petWalletTransaction->id) }}">
-                                                    {{ trans('global.edit') }}
-                                                </a>
-                                            @endcan
 
-                                            @can('pet_wallet_transaction_delete')
-                                                <form action="{{ route('frontend.pet-wallet-transactions.destroy', $petWalletTransaction->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                                </form>
-                                            @endcan
+
 
                                         </td>
 
@@ -144,7 +132,7 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 })
 
 </script>

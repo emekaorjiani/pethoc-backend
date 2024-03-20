@@ -24,7 +24,6 @@ class PetWallet extends Model
         'user_id',
         'amount',
         'transaction_type',
-        'status',
         'created_at',
         'updated_at',
         'deleted_at',

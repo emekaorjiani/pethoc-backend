@@ -1,7 +1,12 @@
 <?php
 
+
+use App\Http\Controllers\PaystackDepositController;
+
 Route::view('/', 'welcome');
 Auth::routes();
+Route::get('/paystack/callback', [PaystackDepositController::class, 'handleCallback'])->name('paystack.callback');
+
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'admin']], function () {
     Route::get('/', 'HomeController@index')->name('home');
@@ -168,10 +173,6 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::delete('vehicles/destroy', 'VehicleController@massDestroy')->name('vehicles.massDestroy');
     Route::resource('vehicles', 'VehicleController');
 
-    // Payments
-    Route::delete('payments/destroy', 'PaymentsController@massDestroy')->name('payments.massDestroy');
-    Route::resource('payments', 'PaymentsController');
-
     // Jobs
     Route::delete('jobs/destroy', 'JobsController@massDestroy')->name('jobs.massDestroy');
     Route::resource('jobs', 'JobsController');
@@ -179,10 +180,6 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     // Vehicle Category
     Route::delete('vehicle-categories/destroy', 'VehicleCategoryController@massDestroy')->name('vehicle-categories.massDestroy');
     Route::resource('vehicle-categories', 'VehicleCategoryController');
-
-    // Wallet Transactions
-    Route::delete('wallet-transactions/destroy', 'WalletTransactionsController@massDestroy')->name('wallet-transactions.massDestroy');
-    Route::resource('wallet-transactions', 'WalletTransactionsController');
 
     // Order
     Route::delete('orders/destroy', 'OrderController@massDestroy')->name('orders.massDestroy');
@@ -241,9 +238,13 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::post('frontend/profile/destroy', 'ProfileController@destroy')->name('profile.destroy');
     Route::post('frontend/profile/password', 'ProfileController@password')->name('profile.password');
     Route::post('profile/toggle-two-factor', 'ProfileController@toggleTwoFactor')->name('profile.toggle-two-factor');
+
+    // Paystack Payments
+    Route::get('/frontend/paystackDeposit', [PaystackDepositController::class, 'showPaystackDepositForm'])->name('deposit.paystackForm');
+    Route::post('/frontend/paystackDeposit/initiate', [PaystackDepositController::class, 'initiatePaystackDeposit'])->name('deposit.initiatePaystack');
 });
 Route::group(['namespace' => 'Auth', 'middleware' => ['auth', '2fa']], function () {
-    // Two Factor Authentication
+    // Two-Factor Authentication
     if (file_exists(app_path('Http/Controllers/Auth/TwoFactorController.php'))) {
         Route::get('two-factor', 'TwoFactorController@show')->name('twoFactor.show');
         Route::post('two-factor', 'TwoFactorController@check')->name('twoFactor.check');

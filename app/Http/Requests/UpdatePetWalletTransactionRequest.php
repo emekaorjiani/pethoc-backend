@@ -28,10 +28,6 @@ class UpdatePetWalletTransactionRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'status' => [
-                'string',
-                'required',
-            ],
         ];
     }
 }

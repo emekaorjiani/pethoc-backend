@@ -11,12 +11,14 @@
         "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.14",
         "laravel/tinker": "^2.7",
-        "yajra/laravel-datatables-oracle": "^9.19",
         "laraveldaily/laravel-charts": "^0.1.29",
         "nuovo/spreadsheet-reader": "^0.5.11",
-        "spatie/laravel-medialibrary": "^10.0.7"
+        "spatie/laravel-medialibrary": "^10.0.7",
+        "yabacon/paystack-php": "^2.2",
+        "yajra/laravel-datatables-oracle": "^9.19"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.12",
         "fakerphp/faker": "^1.9.1",
         "laravel/dusk": "^6.22",
         "laravel/sail": "^1.0.1",
